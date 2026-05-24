@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import type { Event } from "../types/event";
-import { getEventColor, getSeverityColor } from "../utils/utils";
+import { getEventColor, getSeverityColor, safeKey } from "../utils/utils";
 
 type ProsType = {
   events: Event[];
@@ -13,7 +13,7 @@ export const EventList = ({ events, onSelectEvent }: ProsType) => {
       {events.map((event, index) => {
         const severity = event.metadata?.severity;
         return (
-          <div className="relative pl-10">
+          <div className="relative pl-10" key={safeKey("event-ml", event.id, index)}>
             <div className="absolute left-3.5 top-0 bottom-0 w-px bg-zinc-800" />
             <div
               className={`absolute left-[9px] top-8 w-3 h-3 rounded-full border-2 ${
@@ -25,7 +25,7 @@ export const EventList = ({ events, onSelectEvent }: ProsType) => {
               }`}
             />
             <motion.div
-              key={`${event.id}-${index}`}
+              key={safeKey("event-tl", event.id, index)}
               initial={{ opacity: 0, y: 20, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0 }}

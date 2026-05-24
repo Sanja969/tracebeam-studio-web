@@ -12,6 +12,9 @@ export const Header = ({ connected, onClear }: ProsType) => {
         </p>
 
         <h1 className="text-5xl font-bold">Tracebeam Studio ⚡</h1>
+        <p className="mt-3 text-sm text-zinc-500">
+          Local dev session · ws://localhost:8080
+        </p>
       </div>
 
       <div

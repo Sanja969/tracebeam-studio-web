@@ -20,13 +20,14 @@ export const LatencyChart = ({ events }: ProsType) => {
     .slice(0, 20)
     .reverse()
     .map((event) => ({
+      id: event.id,
       name: event.name,
       duration: Number(event.duration?.toFixed(2)),
       time: new Date(event.timestamp).toLocaleTimeString(),
     }));
 
   return (
-    <div className="border border-zinc-800 rounded-2xl p-5 bg-zinc-900 mb-8 mt-10">
+    <div className="border border-zinc-800 rounded-2xl p-5 bg-zinc-900 mb-8 mt-10 min-h-0 min-w-0">
       <div className="flex items-center justify-between mb-4">
         <div>
           <p className="text-zinc-500 text-sm">Latency</p>
@@ -39,8 +40,8 @@ export const LatencyChart = ({ events }: ProsType) => {
       </div>
 
       {durationEvents.length > 0 ? (
-        <div className="h-64">
-          <ResponsiveContainer width="100%" height="100%">
+        <div className="h-64 min-h-0 min-w-0">
+          <ResponsiveContainer width="100%" height="100%" minHeight={0} minWidth={0}>
             <LineChart data={durationEvents}>
               <XAxis dataKey="time" stroke="#71717a" fontSize={12} />
               <YAxis stroke="#71717a" fontSize={12} />

@@ -1,4 +1,5 @@
 import type { Event } from "../types/event";
+import { safeKey } from "../utils/utils";
 
 type ProsType = {
   groupedTraces: Record<string, Event[]>;
@@ -36,9 +37,9 @@ export const TraceSummaries = ({ groupedTraces }: ProsType) => {
       </div>
 
       <div className="grid md:grid-cols-2 gap-4">
-        {traceSummaries.map((trace) => (
+        {traceSummaries.map((trace, i) => (
           <div
-            key={trace.traceId}
+            key={safeKey("trace-sum", trace.traceId, i)}
             className="border border-zinc-800 rounded-xl p-4 bg-black/30"
           >
             <div className="flex items-center justify-between mb-2">

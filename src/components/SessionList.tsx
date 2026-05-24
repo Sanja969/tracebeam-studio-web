@@ -1,4 +1,5 @@
 import type { Event } from "../types/event";
+import { safeKey } from "../utils/utils";
 
 type Props = {
   groupedSessions: Record<string, Event[]>;
@@ -22,12 +23,12 @@ const groupEventsByTrace = (events: Event[]) => {
 export const SessionList = ({ groupedSessions, onSelectEvent }: Props) => {
   return (
     <div className="space-y-5">
-      {Object.entries(groupedSessions).map(([sessionId, sessionEvents]) => {
+      {Object.entries(groupedSessions).map(([sessionId, sessionEvents], i) => {
         const traces = groupEventsByTrace(sessionEvents);
 
         return (
           <div
-            key={sessionId}
+            key={safeKey("session-tl", sessionId, i)}
             className="border border-zinc-800 rounded-2xl bg-zinc-900 p-5"
           >
             <div className="flex items-center justify-between mb-4">
@@ -45,9 +46,9 @@ export const SessionList = ({ groupedSessions, onSelectEvent }: Props) => {
             </div>
 
             <div className="space-y-4">
-              {Object.entries(traces).map(([traceId, traceEvents]) => (
+              {Object.entries(traces).map(([traceId, traceEvents], i) => (
                 <div
-                  key={traceId}
+                  key={safeKey("trace-tl", traceId, i)}
                   className="rounded-xl border border-zinc-800 bg-black/30 p-4"
                 >
                   <div className="flex items-center justify-between mb-3">
@@ -59,9 +60,9 @@ export const SessionList = ({ groupedSessions, onSelectEvent }: Props) => {
                   </div>
 
                   <div className="space-y-2">
-                    {traceEvents.map((event) => (
+                    {traceEvents.map((event, i) => (
                       <div
-                        key={event.id}
+                       key={safeKey("session", event.id, event.name, event.timestamp, i)}
                         className="flex items-center justify-between border-l border-zinc-700 pl-4 py-2 cursor-pointer hover:border-purple-500/40 transition"
                         onClick={() => onSelectEvent(event)}
                       >

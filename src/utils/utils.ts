@@ -1,4 +1,5 @@
-import type { Event } from "../types/event";
+import { API_URL } from "../constants/constants";
+import type { Event, EventQuery } from "../types/event";
 
 export const getEventColor = (type: string) => {
   switch (type) {
@@ -17,23 +18,31 @@ export const getEventColor = (type: string) => {
 };
 
 export const getThroughputData = (events: Event[]) => {
-  const buckets = new Map<string, number>();
+
+  const buckets = new Map<number, number>();
 
   events.forEach((event) => {
-    const date = new Date(event.timestamp);
-    const key = date.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    });
 
-    buckets.set(key, (buckets.get(key) || 0) + 1);
+    const bucket = Math.floor(event.timestamp / 1000) * 1000;
+
+    buckets.set(bucket, (buckets.get(bucket) || 0) + 1);
+
   });
 
-  return Array.from(buckets.entries()).map(([time, count]) => ({
-    time,
-    count,
-  }));
+  return Array.from(buckets.entries())
+
+    .sort(([a], [b]) => a - b)
+
+    .map(([timestamp, count]) => ({
+
+      id: String(timestamp),
+
+      time: new Date(timestamp).toLocaleTimeString(),
+
+      count,
+
+    }));
+
 };
 
 export const getSeverityColor = (severity?: unknown) => {
@@ -90,4 +99,83 @@ export const getEventStats = (events: Event[]) => {
     errorRate:
       events.length === 0 ? 0 : Math.round((error / events.length) * 100),
   };
+};
+
+export const buildEventsUrl = (query: EventQuery) => {
+  const params = new URLSearchParams();
+
+  params.set("limit", String(query.limit ?? 100));
+
+  if (query.type && query.type !== "all") {
+    params.set("type", query.type);
+  }
+
+  if (query.traceId) {
+    params.set("traceId", query.traceId);
+  }
+
+  if (query.sessionId) {
+    params.set("sessionId", query.sessionId);
+  }
+
+  console.log(`url *********: ${API_URL}/events?${params.toString()}`)
+  return `${API_URL}/events?${params.toString()}`;
+};
+
+export const matchesQuery = (event: Event, query: EventQuery) => {
+  if (query.type && query.type !== "all" && event.type !== query.type) {
+    return false;
+  }
+
+  if (query.traceId && event.traceId !== query.traceId) {
+    return false;
+  }
+
+  if (query.sessionId && event.sessionId !== query.sessionId) {
+    return false;
+  }
+
+  return true;
+};
+
+export const safeKey = (...parts: unknown[]) => {
+  return parts
+    .map((part) => String(part || "unknown"))
+    .join("-");
+};
+
+export const getMethodColor = (method: string) => {
+  switch (method) {
+    case "POST":
+      return "border-emerald-500/30 text-emerald-300";
+
+    case "DELETE":
+      return "border-red-500/30 text-red-300";
+
+    case "PUT":
+      return "border-yellow-500/30 text-yellow-300";
+
+    default:
+      return "border-cyan-500/30 text-cyan-300";
+  }
+};
+
+export const getStatusColor = (status) => {
+  if (typeof status !== "number") {
+    return "border-zinc-700 text-zinc-300";
+  }
+
+  if (status >= 500) {
+    return "border-red-500/30 text-red-300";
+  }
+
+  if (status >= 400) {
+    return "border-orange-500/30 text-orange-300";
+  }
+
+  if (status >= 300) {
+    return "border-yellow-500/30 text-yellow-300";
+  }
+
+  return "border-emerald-500/30 text-emerald-300";
 };

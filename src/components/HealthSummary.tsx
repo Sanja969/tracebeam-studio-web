@@ -32,8 +32,9 @@ export const HealthSummary = ({ events }: Props) => {
 
         <div className="text-right text-sm">
           <p>{stats.errorRate}% error rate</p>
+
           <p className="opacity-70">
-            {stats.error} errors / {stats.total} events
+            {stats.error} errors · {stats.total} events
           </p>
         </div>
       </div>

@@ -9,3 +9,10 @@ export type Event = {
   duration?: number;
   metadata?: Record<string, unknown>;
 };
+
+export type EventQuery = {
+  limit?: number;
+  type?: string;
+  traceId?: string;
+  sessionId?: string;
+};

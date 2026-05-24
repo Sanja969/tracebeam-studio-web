@@ -16,7 +16,7 @@ type ProsType = {
 export const ThroughputChart = ({ events }: ProsType) => {
   const throughputData = getThroughputData(events);
   return (
-    <div className="border border-zinc-800 rounded-2xl p-5 bg-zinc-900 mb-8">
+    <div className="border border-zinc-800 rounded-2xl p-5 bg-zinc-900 mb-8 min-h-0 min-w-0">
       <div className="flex items-center justify-between mb-4">
         <div>
           <p className="text-zinc-500 text-sm">Throughput</p>
@@ -27,8 +27,8 @@ export const ThroughputChart = ({ events }: ProsType) => {
       </div>
 
       {throughputData.length > 0 ? (
-        <div className="h-64">
-          <ResponsiveContainer width="100%" height="100%">
+        <div className="h-64 min-h-0 min-w-0">
+          <ResponsiveContainer width="100%" height="100%" minHeight={0} minWidth={0}>
             <LineChart data={throughputData}>
               <XAxis dataKey="time" stroke="#71717a" fontSize={12} />
               <YAxis stroke="#71717a" fontSize={12} allowDecimals={false} />

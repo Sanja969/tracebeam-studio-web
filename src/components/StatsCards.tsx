@@ -1,5 +1,5 @@
 import type { Event } from "../types/event";
-import { cards } from "../utils/utils";
+import { cards, safeKey } from "../utils/utils";
 
 type Props = {
   events: Event[];
@@ -10,9 +10,9 @@ type Props = {
 export const StatsCards = ({ events }: Props) => {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-      {cards.map((card) => (
+      {cards.map((card, i) => (
         <div
-          key={card.label}
+          key={safeKey("stat-card", card.label, i)}
           className={`border rounded-2xl p-5 ${card.className}`}
         >
           <p className={`text-sm mb-2 ${card.labelClassName}`}>

@@ -1,4 +1,5 @@
 import type { Event } from "../types/event";
+import { safeKey } from "../utils/utils";
 
 type Props = {
   groupedTraces: Record<string, Event[]>;
@@ -17,7 +18,7 @@ const getTraceDuration = (events: Event[]) => {
 export const TraceList = ({ groupedTraces, onSelectEvent }: Props) => {
   return (
     <div className="space-y-5">
-      {Object.entries(groupedTraces).map(([traceId, traceEvents]) => {
+      {Object.entries(groupedTraces).map(([traceId, traceEvents], i) => {
         const sortedEvents = [...traceEvents].sort(
           (a, b) => a.timestamp - b.timestamp,
         );
@@ -26,7 +27,7 @@ export const TraceList = ({ groupedTraces, onSelectEvent }: Props) => {
 
         return (
           <div
-            key={traceId}
+            key={safeKey("trace-m", traceId, i)}
             className="border border-zinc-800 rounded-2xl bg-zinc-900 p-5"
           >
             <div className="flex items-center justify-between mb-5">
@@ -47,8 +48,12 @@ export const TraceList = ({ groupedTraces, onSelectEvent }: Props) => {
             <div className="relative space-y-3 pl-6">
               <div className="absolute left-2 top-2 bottom-2 w-px bg-zinc-800" />
 
-              {sortedEvents.map((event) => (
-                <div key={event.id} className="relative" onClick={() => onSelectEvent(event)}>
+              {sortedEvents.map((event, i) => (
+                <div
+                  key={safeKey("trace", event.id, event.name, i)}
+                  className="relative"
+                  onClick={() => onSelectEvent(event)}
+                >
                   <div className="absolute -left-[22px] top-2 h-3 w-3 rounded-full bg-purple-500 border border-purple-300" />
 
                   <div className="rounded-xl border border-zinc-800 bg-black/30 p-4 cursor-pointer hover:border-purple-500/40 transition">

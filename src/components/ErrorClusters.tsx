@@ -1,4 +1,5 @@
 import type { Event } from "../types/event";
+import { safeKey } from "../utils/utils";
 
 type Props = {
   events: Event[];
@@ -39,12 +40,12 @@ export const ErrorClusters = ({ events, onSelectEvent }: Props) => {
       </div>
 
       <div className="space-y-3">
-        {clusters.map(([name, clusterEvents]) => {
+        {clusters.map(([name, clusterEvents], i) => {
           const latestEvent = clusterEvents[0];
 
           return (
             <button
-              key={name}
+              key={safeKey("unique-error", clusterEvents[0].id, i)}
               onClick={() => onSelectEvent(latestEvent)}
               className="w-full text-left rounded-xl border border-red-500/20 bg-red-500/5 p-4 hover:border-red-400/50 transition"
             >
