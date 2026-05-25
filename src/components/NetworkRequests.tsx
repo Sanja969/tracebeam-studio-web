@@ -39,7 +39,10 @@ export const NetworkRequests = ({ events, onSelectEvent }: Props) => {
           {fetchEvents.map((event, i) => {
             const method = String(event.metadata?.method || "GET");
             const url = String(event.metadata?.url || "unknown");
-            const status = event.metadata?.status;
+            const status =
+              typeof event.metadata?.status === "number"
+                ? event.metadata.status
+                : undefined;
 
             const isError = typeof status === "number" && status >= 400;
 
