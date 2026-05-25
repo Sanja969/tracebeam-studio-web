@@ -7,6 +7,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { EmptyState } from "./EmptyState";
 
 type Props = {
   events: Event[];
@@ -27,7 +28,7 @@ export const LatencyChart = ({ events }: Props) => {
     }));
 
   return (
-    <div className="border border-zinc-800 rounded-2xl p-5 bg-zinc-900 mb-8 mt-10 min-h-0 min-w-0">
+    <div className="border border-zinc-800 rounded-2xl p-5 bg-zinc-900 mb-8 min-h-0 min-w-0">
       <div className="flex items-center justify-between mb-4">
         <div>
           <p className="text-zinc-500 text-sm">Latency</p>
@@ -69,9 +70,10 @@ export const LatencyChart = ({ events }: Props) => {
           </ResponsiveContainer>
         </div>
       ) : (
-        <div className="h-40 flex items-center justify-center text-zinc-500">
-          Waiting for measured operations...
-        </div>
+        <EmptyState
+          title="No measured operations yet"
+          description="Measured SDK events will appear here."
+        />
       )}
     </div>
   );

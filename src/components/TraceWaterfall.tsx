@@ -1,5 +1,6 @@
 import type { Event } from "../types/event";
 import { safeKey } from "../utils/utils";
+import { EmptyState } from "./EmptyState";
 
 type Props = {
   events: Event[];
@@ -30,7 +31,7 @@ export const TraceWaterfall = ({ events, onSelectEvent }: Props) => {
       .filter(([, traceEvents]) => traceEvents.length > 0),
   );
 
-  const traceEntries = Object.entries(traces) as [string, Event[]][]
+  const traceEntries = Object.entries(traces) as [string, Event[]][];
 
   return (
     <div className="border border-zinc-800 rounded-2xl p-5 bg-zinc-900 mb-8">
@@ -40,9 +41,10 @@ export const TraceWaterfall = ({ events, onSelectEvent }: Props) => {
           <h2 className="text-xl font-semibold">Trace waterfall</h2>
         </div>
         {Object.keys(traces).length === 0 && (
-          <div className="rounded-xl border border-zinc-800 bg-black/30 p-6 text-zinc-500">
-            No measured trace data yet.
-          </div>
+          <EmptyState
+            title="No measured trace data yet"
+            description="Send measure or fetch events to see performance waterfalls."
+          />
         )}
 
         <p className="text-zinc-500 text-sm">

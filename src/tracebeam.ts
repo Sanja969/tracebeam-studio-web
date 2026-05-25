@@ -1,4 +1,5 @@
 import { enableOverlay } from "tracebeam";
 
-
-enableOverlay();
+if (import.meta.env.DEV) {
+  enableOverlay();
+}

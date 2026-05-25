@@ -8,6 +8,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { getThroughputData } from "../utils/utils";
+import { EmptyState } from "./EmptyState";
 
 type Props = {
   events: Event[];
@@ -56,9 +57,10 @@ export const ThroughputChart = ({ events }: Props) => {
           </ResponsiveContainer>
         </div>
       ) : (
-        <div className="h-40 flex items-center justify-center text-zinc-500">
-          Waiting for events...
-        </div>
+        <EmptyState
+          title="No events yet"
+          description="Connect an app and send events to see throughput."
+        />
       )}
     </div>
   );
