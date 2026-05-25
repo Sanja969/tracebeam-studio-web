@@ -53,9 +53,9 @@ enableFetchInstrumentation();
 enableGlobalErrorCapture();
 ```
 
-## Status
+## Current status
 
-Tracebeam Studio Web is under active development.
+Tracebeam Studio Web is actively being developed and expanded with additional observability tooling features.
 
 ## License
 
