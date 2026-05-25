@@ -52,3 +52,11 @@ configure({
 enableFetchInstrumentation();
 enableGlobalErrorCapture();
 ```
+
+## Status
+
+Tracebeam Studio Web is under active development.
+
+## License
+
+MIT
