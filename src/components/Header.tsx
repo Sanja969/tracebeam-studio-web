@@ -1,9 +1,9 @@
-type ProsType = {
+type Props = {
   connected: boolean;
   onClear: () => void;
 };
 
-export const Header = ({ connected, onClear }: ProsType) => {
+export const Header = ({ connected, onClear }: Props) => {
   return (
     <div className="flex items-center justify-between mb-10">
       <div>

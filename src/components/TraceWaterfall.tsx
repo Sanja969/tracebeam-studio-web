@@ -30,6 +30,8 @@ export const TraceWaterfall = ({ events, onSelectEvent }: Props) => {
       .filter(([, traceEvents]) => traceEvents.length > 0),
   );
 
+  const traceEntries = Object.entries(traces) as [string, Event[]][]
+
   return (
     <div className="border border-zinc-800 rounded-2xl p-5 bg-zinc-900 mb-8">
       <div className="flex items-center justify-between mb-5">
@@ -49,7 +51,7 @@ export const TraceWaterfall = ({ events, onSelectEvent }: Props) => {
       </div>
 
       <div className="space-y-6">
-        {Object.entries(traces).map(([traceId, traceEvents]: [string, Event[]], i) => {
+        {traceEntries.map(([traceId, traceEvents]: [string, Event[]], i) => {
           const sortedEvents = [...traceEvents].sort(
             (a, b) => a.timestamp - b.timestamp,
           );

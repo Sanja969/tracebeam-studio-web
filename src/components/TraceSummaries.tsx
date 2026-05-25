@@ -1,11 +1,11 @@
 import type { Event } from "../types/event";
 import { safeKey } from "../utils/utils";
 
-type ProsType = {
+type Props = {
   groupedTraces: Record<string, Event[]>;
 };
 
-export const TraceSummaries = ({ groupedTraces }: ProsType) => {
+export const TraceSummaries = ({ groupedTraces }: Props) => {
   const traceSummaries = Object.entries(groupedTraces).map(
     ([traceId, traceEvents]) => {
       const sortedEvents = [...traceEvents].sort(

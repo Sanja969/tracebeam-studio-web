@@ -1,20 +1,22 @@
-import type { Event } from "../types/event";
+import type { Event, ViewModeType } from "../types/event";
 import { TraceList } from "./TraceList";
 import { useState } from "react";
 import { ViewMode } from "./ViewMode";
 import { SessionList } from "./SessionList";
 import { EventList } from "./EventList";
 
-type ProsType = {
+type Props = {
   events: Event[];
-  onSelectEvent: (event) => void;
-  groupedTraces: Record<string, Event[]>
+  onSelectEvent: (event: Event) => void;
+  groupedTraces: Record<string, Event[]>;
 };
 
-type ViewMode = "events" | "traces" | "sessions";
-
-export const EventTimeline = ({ events, groupedTraces, onSelectEvent }: ProsType) => {
-  const [viewMode, setViewMode] = useState<ViewMode>("events");
+export const EventTimeline = ({
+  events,
+  groupedTraces,
+  onSelectEvent,
+}: Props) => {
+  const [viewMode, setViewMode] = useState<ViewModeType>("events");
 
   const groupedSessions = events.reduce<Record<string, Event[]>>(
     (groups, event) => {
@@ -35,7 +37,7 @@ export const EventTimeline = ({ events, groupedTraces, onSelectEvent }: ProsType
     <>
       <ViewMode
         viewMode={viewMode}
-        onChange={(viewMode: ViewMode) => setViewMode(viewMode)}
+        onChange={(viewMode: ViewModeType) => setViewMode(viewMode)}
       />
       <div className="space-y-4">
         {events.length === 0 && (

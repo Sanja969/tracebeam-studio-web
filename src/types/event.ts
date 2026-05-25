@@ -16,3 +16,5 @@ export type EventQuery = {
   traceId?: string;
   sessionId?: string;
 };
+
+export type ViewModeType = "events" | "traces" | "sessions";

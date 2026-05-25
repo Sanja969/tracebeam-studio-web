@@ -1,6 +1,11 @@
+import type { ViewModeType } from "../types/event";
+
 type Props = {
-  viewMode: string;
-  onChange: (viewMode: string) => void;
+
+  viewMode: ViewModeType;
+
+  onChange: (viewMode: ViewModeType) => void;
+
 };
 
 export const ViewMode = ({ viewMode, onChange }: Props) => {

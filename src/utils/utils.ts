@@ -160,7 +160,7 @@ export const getMethodColor = (method: string) => {
   }
 };
 
-export const getStatusColor = (status) => {
+export const getStatusColor = (status: number | undefined) => {
   if (typeof status !== "number") {
     return "border-zinc-700 text-zinc-300";
   }

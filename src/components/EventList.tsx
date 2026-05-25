@@ -2,12 +2,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import type { Event } from "../types/event";
 import { getEventColor, getSeverityColor, safeKey } from "../utils/utils";
 
-type ProsType = {
+type Props = {
   events: Event[];
-  onSelectEvent: (event) => void;
+  onSelectEvent: (event: Event) => void;
 };
 
-export const EventList = ({ events, onSelectEvent }: ProsType) => {
+export const EventList = ({ events, onSelectEvent }: Props) => {
   return (
     <AnimatePresence>
       {events.map((event, index) => {

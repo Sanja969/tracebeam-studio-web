@@ -8,11 +8,11 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-type ProsType = {
+type Props = {
   events: Event[];
 };
 
-export const LatencyChart = ({ events }: ProsType) => {
+export const LatencyChart = ({ events }: Props) => {
   const durationEvents = events
     .filter(
       (event) => event.type === "measure" && typeof event.duration === "number",
@@ -41,7 +41,12 @@ export const LatencyChart = ({ events }: ProsType) => {
 
       {durationEvents.length > 0 ? (
         <div className="h-64 min-h-0 min-w-0">
-          <ResponsiveContainer width="100%" height="100%" minHeight={0} minWidth={0}>
+          <ResponsiveContainer
+            width="100%"
+            height="100%"
+            minHeight={0}
+            minWidth={0}
+          >
             <LineChart data={durationEvents}>
               <XAxis dataKey="time" stroke="#71717a" fontSize={12} />
               <YAxis stroke="#71717a" fontSize={12} />
